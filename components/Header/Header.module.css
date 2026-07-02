@@ -1,0 +1,45 @@
+.header {
+  height: 74px;
+  background: #fff;
+  border-bottom: 1px solid #ececec;
+}
+
+.wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo img {
+  height: 28px;
+}
+
+.nav {
+  display: flex;
+  gap: 40px;
+}
+
+.nav a {
+  color: #282828;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.nav a:hover {
+  color: #28a745;
+}
+
+.login {
+  width: 166px;
+  height: 44px;
+  border: 1px solid #28a745;
+  border-radius: 8px;
+  background: #fff;
+  color: #28a745;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
