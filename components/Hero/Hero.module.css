@@ -1,0 +1,35 @@
+.hero {
+  padding: 50px 0;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+
+.text {
+  flex: 1;
+}
+
+.text h1 {
+  font-size: 48px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.text h1 span {
+  color: #28a745;
+}
+
+.text p {
+  color: #666;
+  font-size: 18px;
+}
+
+.image {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
