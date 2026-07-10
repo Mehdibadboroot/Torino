@@ -1,23 +1,45 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 
 import MainLayout from "../layouts/MainLayout";
 import { getBasket } from "../services/basket";
+import { createOrder } from "../services/orders";
 
-export default function Basket() {
-  const [basket, setBasket] = useState([]);
+export default function BasketPage() {
+  const [tour, setTour] = useState(null);
 
   useEffect(() => {
-    getBasket().then((res) => {
-      setBasket(res.data);
-    });
+    loadBasket();
   }, []);
 
-  const totalPrice = basket.reduce(
-    (sum, item) => sum + item.price,
-    0
-  );
+  const loadBasket = async () => {
+    try {
+      const { data } = await getBasket();
+      setTour(data);
+    } catch (err) {
+      setTour(null);
+    }
+  };
+
+  const paymentHandler = async () => {
+  try {
+    const orderData = {
+      nationalCode: "3720878654",
+      fullName: "John Doe",
+      gender: "male",
+      birthDate: "2022-10-10",
+    };
+
+    const { data } = await createOrder(orderData);
+
+    alert(data.message);
+
+    await loadBasket();
+  } catch (err) {
+    console.log(err.response?.data);
+    alert(err.response?.data?.message || "پرداخت انجام نشد");
+  }
+};
 
   return (
     <MainLayout>
@@ -27,26 +49,33 @@ export default function Basket() {
           margin: "40px auto",
         }}
       >
-        <h1>سبد خرید</h1>
+        <h2>سبد خرید</h2>
 
-        {basket.map((tour) => (
+        {tour && (
+          <button
+            onClick={paymentHandler}
+            style={{
+              margin: "20px 0",
+              padding: "10px 20px",
+            }}
+          >
+            پرداخت
+          </button>
+        )}
+
+        {!tour && <p>سبد خرید خالی است.</p>}
+
+        {tour && (
           <div
-            key={tour.id}
             style={{
               display: "flex",
               gap: 20,
               border: "1px solid #ddd",
               borderRadius: 12,
-              marginBottom: 20,
               padding: 20,
             }}
           >
-            <Image
-              src={tour.image}
-              width={220}
-              height={150}
-              alt={tour.title}
-            />
+            <Image src={tour.image} width={250} height={170} alt={tour.title} />
 
             <div>
               <h2>{tour.title}</h2>
@@ -55,24 +84,18 @@ export default function Basket() {
                 {tour.origin.name} → {tour.destination.name}
               </p>
 
+              <p>قیمت: {tour.price.toLocaleString()} تومان</p>
+
               <p>
-                {tour.price.toLocaleString()} تومان
+                ظرفیت: {tour.availableSeats}
+                {" / "}
+                {tour.capacity}
               </p>
+
+              <p>وسیله نقلیه: {tour.fleetVehicle}</p>
             </div>
           </div>
-        ))}
-
-        <h2>
-          مجموع :
-          {" "}
-          {totalPrice.toLocaleString()}
-          {" "}
-          تومان
-        </h2>
-
-        <Link href="/payment">
-          <button>ادامه خرید</button>
-        </Link>
+        )}
       </div>
     </MainLayout>
   );

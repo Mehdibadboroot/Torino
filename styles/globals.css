@@ -1,12 +1,77 @@
 @import "./reset.css";
 @import "./variables.css";
 
-.container {
-    width: min(100% - 32px, var(--container));
-    margin-inline: auto;
+@font-face {
+  font-family: "YekanBakh";
+  src: url("/fonts/YekanBakh-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
 }
 
-.button{
-    cursor:pointer;
-    transition:.3s;
+@font-face {
+  font-family: "YekanBakh";
+  src: url("/fonts/YekanBakh-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
 }
+
+body {
+  font-family: "YekanBakh", sans-serif;
+}
+
+.container {
+  width: min(100% - 32px, var(--container));
+  margin-inline: auto;
+}
+
+.button {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.rmdp-wrapper {
+  font-family: inherit;
+}
+
+.rmdp-day.rmdp-selected span:not(.highlight) {
+  background: #28a745 !important;
+}
+
+.rmdp-range {
+  background: #28a745 !important;
+}
+
+.rmdp-arrow-container:hover {
+  background: #28a745 !important;
+}
+
+.rmdp-arrow {
+  border-color: #fff !important;
+}
+
+.rmdp-header-values {
+  color: #28a745;
+  font-weight: 700;
+}
+.rmdp-arrow-container {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: #28a745;
+  transition: 0.2s;
+}
+
+.rmdp-arrow-container:hover {
+  transform: scale(1.05);
+}
+.rmdp-wrapper {
+  border-radius: 18px;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0,0,0,.12);
+}
+.rmdp-day span:hover {
+  background: #dff5e6 !important;
+  color: #28a745 !important;
+}
+

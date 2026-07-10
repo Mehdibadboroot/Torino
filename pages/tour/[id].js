@@ -1,85 +1,49 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
 import MainLayout from "../../layouts/MainLayout";
-import { getTour } from "../../services/tours";
-import { addToBasket } from "../../services/basket";
-import { useAuth } from "../../context/AuthContext";
+import TourDetails from "../../components/TourDetails/TourDetails";
 
-export default function TourDetail() {
+import { getTour } from "../../services/tours";
+
+export default function TourPage() {
   const router = useRouter();
   const { id } = router.query;
 
-  const { user } = useAuth();
-
   const [tour, setTour] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!id) return;
 
-    getTour(id).then((res) => {
-      setTour(res.data);
-    });
+    const loadTour = async () => {
+      try {
+        const { data } = await getTour(id);
+        setTour(data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadTour();
   }, [id]);
 
-  const reserveHandler = async () => {
-    if (!user) {
-      alert("ابتدا وارد شوید");
-      return;
-    }
-
-    try {
-      const res = await addToBasket(id);
-
-      alert(res.data.message);
-    } catch (err) {
-      alert("خطا");
-    }
-  };
-
-  if (!tour) return <p>درحال بارگذاری...</p>;
+  
 
   return (
     <MainLayout>
       <div
         style={{
-          maxWidth: 1100,
+          maxWidth: "1220px",
           margin: "40px auto",
+          padding: "0 16px",
         }}
       >
-        <Image
-          src={tour.image}
-          width={700}
-          height={450}
-          alt={tour.title}
-        />
+        {loading && <h3>در حال دریافت اطلاعات...</h3>}
 
-        <h1>{tour.title}</h1>
-
-        <p>
-          {tour.origin.name} → {tour.destination.name}
-        </p>
-
-        <p>
-          قیمت:
-          {" "}
-          {tour.price.toLocaleString()}
-          {" "}
-          تومان
-        </p>
-
-        <p>
-          ظرفیت:
-          {" "}
-          {tour.availableSeats}
-          {" / "}
-          {tour.capacity}
-        </p>
-
-        <button onClick={reserveHandler}>
-          رزرو تور
-        </button>
+        {!loading && tour && <TourDetails tour={tour} />}
       </div>
     </MainLayout>
   );

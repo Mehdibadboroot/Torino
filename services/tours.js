@@ -6,6 +6,6 @@ export const getTours = (params = {}) => {
   });
 };
 
-export const getTour = (tourId) => {
-  return api.get(`/tour/${tourId}`);
+export const getTour = (id) => {
+  return api.get(`/tour/${id}`);
 };

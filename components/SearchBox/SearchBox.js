@@ -1,64 +1,93 @@
-import { useEffect, useState } from "react";
-import useTours from "../../hooks/useTours";
+import { useState } from "react";
+import { useRouter } from "next/router";
+
+import DatePicker from "react-multi-date-picker";
+import gregorian from "react-date-object/calendars/gregorian";
+
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+
+import { FiCalendar } from "react-icons/fi";
+import { HiOutlineLocationMarker } from "react-icons/hi";
+
 import styles from "./SearchBox.module.css";
 
 export default function SearchBox() {
-  const { tours } = useTours();
-
-  const [origins, setOrigins] = useState([]);
-  const [destinations, setDestinations] = useState([]);
+  const router = useRouter();
 
   const [originId, setOriginId] = useState("");
   const [destinationId, setDestinationId] = useState("");
-  const [startDate, setStartDate] = useState("");
 
-  useEffect(() => {
-    if (!tours.length) return;
+  const [dateRange, setDateRange] = useState([]);
 
-    setOrigins(
-      [...new Map(tours.map(item => [item.origin.id, item.origin])).values()]
-    );
+  const searchHandler = () => {
+    const query = {};
 
-    setDestinations(
-      [...new Map(tours.map(item => [item.destination.id, item.destination])).values()]
-    );
-  }, [tours]);
+    if (originId) query.originId = originId;
+    if (destinationId) query.destinationId = destinationId;
 
+    if (dateRange.length === 2) {
+      query.startDate = dateRange[0].convert(gregorian).toDate().toISOString();
+
+      query.endDate = dateRange[1].convert(gregorian).toDate().toISOString();
+    }
+
+    
+
+    router.push({
+      pathname: "/",
+      query,
+    });
+  };
   return (
-    <div className={styles.box}>
-      <select
-        value={originId}
-        onChange={(e) => setOriginId(e.target.value)}
-      >
-        <option value="">مبدا</option>
+    <div className={styles.search}>
+      <button onClick={searchHandler}>جستجو</button>
+      <div className={styles.item}>
+        <FiCalendar />
 
-        {origins.map(item => (
-          <option key={item.id} value={item.id}>
-            {item.name}
-          </option>
-        ))}
-      </select>
-
-      <select
-        value={destinationId}
-        onChange={(e) => setDestinationId(e.target.value)}
-      >
-        <option value="">مقصد</option>
-
-        {destinations.map(item => (
-          <option key={item.id} value={item.id}>
-            {item.name}
-          </option>
-        ))}
-      </select>
-
-      <input
-        type="date"
-        value={startDate}
-        onChange={(e) => setStartDate(e.target.value)}
-      />
-
-      <button>جستجو</button>
+        <DatePicker
+          value={dateRange}
+          onChange={setDateRange}
+          range
+          rangeHover
+          numberOfMonths={2}
+          onlyMonthPicker={false}
+          calendar={persian}
+          locale={persian_fa}
+          format="YYYY/MM/DD"
+          placeholder="تاریخ"
+          calendarPosition="bottom"
+          inputClass={styles.dateInput}
+          className="custom-calendar"
+         
+        />
+      </div>
+      <div className={styles.item}>
+        <HiOutlineLocationMarker />
+        <select
+          value={destinationId}
+          onChange={(e) => setDestinationId(e.target.value)}
+        >
+          <option value="">مقصد</option>
+          <option value="2">سنندج</option>
+          <option value="3">مادرید</option>
+          <option value="5">سلیمانیه</option>
+          <option value="6">هولر</option>
+          <option value="7">مازندران</option>
+          <option value="8">گیلان</option>
+          <option value="9">ایتالیا</option>
+        </select>
+      </div>
+      <div className={styles.item}>
+        <HiOutlineLocationMarker />
+        <select value={originId} onChange={(e) => setOriginId(e.target.value)}>
+          <option value="">مبدا</option>
+          <option value="1">تهران</option>
+          <option value="2">سنندج</option>
+          <option value="3">تبریز</option>
+          <option value="4">شیراز</option>
+        </select>
+      </div>
     </div>
   );
 }

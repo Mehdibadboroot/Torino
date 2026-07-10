@@ -1,17 +1,91 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 import Container from "../Container/Container";
 import LoginModal from "../auth/LoginModal/LoginModal";
+
+import { useState, useEffect } from "react";
+
+import { sendOtp, checkOtp } from "../../services/auth";
+
 import { useAuth } from "../../context/AuthContext";
 
 import styles from "./Header.module.css";
 
 export default function Header() {
   const [showModal, setShowModal] = useState(false);
+  const [step, setStep] = useState(1);
 
-  const { user, logout } = useAuth();
+  const [mobile, setMobile] = useState("");
+
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+
+  const [timer, setTimer] = useState(90);
+
+  const { user, login, logout } = useAuth();
+
+  useEffect(() => {
+    if (step !== 2) return;
+
+    if (timer <= 0) return;
+
+    const interval = setInterval(() => {
+      setTimer((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [step, timer]);
+
+  const sendOtpHandler = async () => {
+    if (mobile.length !== 11) {
+      alert("شماره موبایل معتبر نیست");
+      return;
+    }
+
+    try {
+      await sendOtp(mobile);
+
+      setStep(2);
+
+      setTimer(90);
+
+      setOtp(["", "", "", "", "", ""]);
+    } catch (err) {
+      alert(err.response?.data?.message || "خطا");
+    }
+  };
+
+  const checkOtpHandler = async () => {
+    try {
+      const code = otp.join("");
+
+      const { data } = await checkOtp(mobile, code);
+
+      login(data);
+
+      setShowModal(false);
+
+      setStep(1);
+
+      setMobile("");
+
+      setOtp(["", "", "", "", "", ""]);
+    } catch (err) {
+      alert(err.response?.data?.message || "کد اشتباه است");
+    }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+
+    setStep(1);
+
+    setMobile("");
+
+    setOtp(["", "", "", "", "", ""]);
+
+    setTimer(90);
+  };
 
   return (
     <>
@@ -50,7 +124,6 @@ export default function Header() {
                   <Link href="/profile">پروفایل</Link>
 
                   <Link href="/my-tours">تورهای من</Link>
-
                   <Link href="/basket">سبد خرید</Link>
 
                   <button onClick={logout}>خروج</button>
@@ -68,7 +141,20 @@ export default function Header() {
         </Container>
       </header>
 
-      {showModal && <LoginModal onClose={() => setShowModal(false)} />}
+      {showModal && (
+        <LoginModal
+          step={step}
+          mobile={mobile}
+          setMobile={setMobile}
+          otp={otp}
+          setOtp={setOtp}
+          timer={timer}
+          sendOtpHandler={sendOtpHandler}
+          checkOtpHandler={checkOtpHandler}
+          backHandler={() => setStep(1)}
+          closeHandler={closeModal}
+        />
+      )}
     </>
   );
 }

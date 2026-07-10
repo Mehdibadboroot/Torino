@@ -14,6 +14,8 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+  console.log("TOKEN:", Cookies.get("accessToken"));
+  console.log("AUTH:", config.headers.Authorization);
 
   return config;
 });

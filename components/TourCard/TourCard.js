@@ -1,45 +1,46 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import styles from "./TourCard.module.css";
+
 export default function TourCard({ tour }) {
+  const start = new Date(tour.startDate);
+
   return (
-    <Link
-      href={`/tour/${tour.id}`}
-      style={{
-        textDecoration: "none",
-        color: "inherit",
-      }}
-    >
-      <div
-        style={{
-          width: 320,
-          border: "1px solid #ddd",
-          borderRadius: 16,
-          overflow: "hidden",
-          cursor: "pointer",
-        }}
-      >
+    <div className={styles.card}>
+      <Link href={`/tour/${tour.id}`}>
         <Image
           src={tour.image}
           alt={tour.title}
           width={320}
-          height={220}
+          height={200}
+          className={styles.image}
         />
+      </Link>
 
-        <div style={{ padding: 16 }}>
-          <h3>{tour.title}</h3>
+      <div className={styles.body}>
+        <h3>{tour.title}</h3>
 
-          <p>
-            {tour.origin.name} → {tour.destination.name}
-          </p>
+        <p className={styles.info}>
+          {start.getMonth() + 1} مهر •{" "}
+          {Math.ceil(
+            (new Date(tour.endDate) - new Date(tour.startDate)) /
+              (1000 * 60 * 60 * 24),
+          )}{" "}
+          روزه • {tour.fleetVehicle} • هتل ۳ ستاره
+        </p>
+      </div>
 
-          <p>{tour.price.toLocaleString()} تومان</p>
+      <div className={styles.footer}>
+        <Link href={`/tour/${tour.id}`} className={styles.btn}>
+          رزرو
+        </Link>
 
-          <p>
-            {tour.availableSeats} / {tour.capacity}
-          </p>
+        <div className={styles.price}>
+          <small>تومان</small>
+          <span>{tour.price.toLocaleString("fa-IR")}</span>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

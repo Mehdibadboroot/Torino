@@ -1,26 +1,95 @@
-.box {
-  margin-top: 40px;
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(0,0,0,.08);
-  padding: 20px;
+.search {
+  width: 874px;
+  max-width: 1040px;
+  height: 71px;
+  direction: ltr;
+  margin: 0 auto;
+
   display: flex;
-  gap: 15px;
+  align-items: center;
+
+  background: #fff;
+  border: 1px solid #e7e7e7;
+  border-radius: 20px;
+
+  overflow: hidden;
 }
 
-.box input {
-  flex: 1;
-  height: 48px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 0 12px;
-}
+.search button {
+  width: 190px;
+  height: 56px;
 
-.box button {
-  width: 150px;
+  margin: 8px;
+
   border: none;
-  border-radius: 10px;
+  border-radius: 16px;
+
   background: #28a745;
-  color: white;
+  color: #fff;
+
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.search button:hover {
+  background: #23913c;
+}
+
+.item,
+.button {
+  direction: rtl;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  height: 100%;
+
+  padding: 0 28px;
+
+  border-right: 1px solid #ececec;
+}
+
+.item:last-child {
+  border-right: none;
+}
+
+.item svg {
+  color: #666;
+  font-size: 22px;
+}
+
+.item select {
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  font-family: inherit;
+  font-size: 17px;
+
   cursor: pointer;
 }
+
+.dateInput {
+  width: 100% !important;
+
+  border: none !important;
+  outline: none !important;
+
+  background: transparent !important;
+
+  font-family: inherit !important;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+

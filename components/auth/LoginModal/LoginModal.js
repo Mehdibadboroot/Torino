@@ -1,119 +1,132 @@
 import { useState } from "react";
-import { sendOtp, checkOtp } from "../../../services/auth";
-import { useAuth } from "../../../context/AuthContext";
+import styles from "./LoginModal.module.css";
 
-export default function LoginModal({ onClose }) {
-  const { login } = useAuth();
+import { IoClose } from "react-icons/io5";
+import { HiOutlineArrowRight } from "react-icons/hi";
 
-  const [step, setStep] = useState(1);
-  const [mobile, setMobile] = useState("");
-  const [code, setCode] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const sendCodeHandler = async () => {
-    if (!mobile) return alert("شماره موبایل را وارد کنید");
-
-    try {
-      setLoading(true);
-
-      const { data } = await sendOtp(mobile);
-
-      console.log("OTP :", data);
-
-      setStep(2);
-    } catch (err) {
-      alert(err.response?.data?.message || "خطا در ارسال کد");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const verifyHandler = async () => {
-    if (!code) return alert("کد را وارد کنید");
-
-    try {
-      setLoading(true);
-
-      const { data } = await checkOtp(mobile, code);
-
-      login(data);
-
-      onClose();
-    } catch (err) {
-      alert(err.response?.data?.message || "کد اشتباه است");
-    } finally {
-      setLoading(false);
-    }
-  };
-
+export default function LoginModal({
+  step,
+  mobile,
+  setMobile,
+  otp,
+  setOtp,
+  timer,
+  sendOtpHandler,
+  checkOtpHandler,
+  backHandler,
+  closeHandler,
+}) {
   return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,.4)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div
-        style={{
-          background: "#fff",
-          padding: 30,
-          borderRadius: 12,
-          width: 350,
-        }}
-      >
+    <div className={styles.overlay}>
+      <div className={styles.modal}>
         {step === 1 ? (
           <>
-            <h3>ورود</h3>
+            <button className={styles.close} onClick={closeHandler}>
+              <IoClose />
+            </button>
+
+            <h2>ورود به تورینو</h2>
+
+            <p className={styles.label}>شماره موبایل خود را وارد کنید</p>
 
             <input
-              style={{ width: "100%", marginTop: 20 }}
+              className={styles.input}
+              type="tel"
+              placeholder="0912***2452"
               value={mobile}
               onChange={(e) => setMobile(e.target.value)}
-              placeholder="09123456789"
             />
 
-            <button
-              onClick={sendCodeHandler}
-              disabled={loading}
-              style={{ width: "100%", marginTop: 20 }}
-            >
-              ارسال کد
+            <button className={styles.submit} onClick={sendOtpHandler}>
+              ارسال کد تایید
             </button>
           </>
         ) : (
           <>
-            <h3>کد تایید</h3>
+            <button className={styles.back} onClick={backHandler}>
+              <HiOutlineArrowRight />
+            </button>
 
-            <input
-              style={{ width: "100%", marginTop: 20 }}
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              placeholder="کد"
-            />
+            <h2>کد تایید را وارد کنید.</h2>
 
+            <p className={styles.desc}>
+              کد تایید به شماره
+              <span>{mobile}</span>
+              ارسال شد
+            </p>
+
+            <div className={styles.otpWrapper}>
+              {[0, 1, 2, 3, 4, 5].map((item) => (
+                <input
+                  key={item}
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  maxLength={1}
+                  className={styles.otp}
+                  value={otp[item]}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, "");
+
+                    const copy = [...otp];
+
+                    copy[item] = value;
+
+                    setOtp(copy);
+
+                    if (value && e.target.nextElementSibling) {
+                      e.target.nextElementSibling.focus();
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (
+                      e.key === "Backspace" &&
+                      !otp[item] &&
+                      e.target.previousElementSibling
+                    ) {
+                      e.target.previousElementSibling.focus();
+                    }
+                  }}
+                  onPaste={(e) => {
+                    const paste = e.clipboardData
+                      .getData("text")
+                      .replace(/\D/g, "");
+
+                    if (paste.length === 6) {
+                      setOtp(paste.split(""));
+                    }
+
+                    e.preventDefault();
+                  }}
+                />
+              ))}
+            </div>
+
+            <p className={styles.timer}>
+              {timer > 0 ? (
+                <>
+                  ارسال مجدد کد تا
+                  <span>
+                    {" "}
+                    01:
+                    {timer.toString().padStart(2, "0")}
+                  </span>
+                </>
+              ) : (
+                <button className={styles.resend} onClick={sendOtpHandler}>
+                  ارسال مجدد کد
+                </button>
+              )}
+            </p>
             <button
-              onClick={verifyHandler}
-              disabled={loading}
-              style={{ width: "100%", marginTop: 20 }}
+              className={styles.submit}
+              disabled={otp.join("").length !== 6}
+              onClick={checkOtpHandler}
             >
-              تایید
+              ورود به تورینو
             </button>
           </>
         )}
-
-        <button
-          style={{
-            marginTop: 15,
-            width: "100%",
-          }}
-          onClick={onClose}
-        >
-          بستن
-        </button>
       </div>
     </div>
   );

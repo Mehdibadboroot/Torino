@@ -1,8 +1,10 @@
 .header {
   height: 74px;
+  width: 100%;
   border-bottom: 1px solid #ececec;
   background: #fff;
-  position: sticky;
+  filter: drop-shadow(#00000029);
+  position: fixed;
   top: 0;
   z-index: 100;
 }
@@ -30,13 +32,15 @@
 .nav {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 36px;
+  margin-left: 300px;
 }
 
-.nav a {
-  color: #444;
+.nav link {
+  color: #282828;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 16px;
   transition: .2s;
 }
 
@@ -46,23 +50,27 @@
 
 .active {
   color: #28a745 !important;
+  font-size: 16px;
   font-weight: bold;
 }
 
 .loginBtn {
   width: 150px;
   height: 44px;
-  border: none;
-  border-radius: 10px;
-  background: #28a745;
-  color: white;
+  border-radius: 8px;
+  color: #28A745;
+  border: solid 2px;
+  background-color: #fff;
+  border-color: #28A745;
   cursor: pointer;
   font-size: 15px;
   transition: .2s;
 }
 
 .loginBtn:hover {
-  background: #21903a;
+  color: #fff;
+  background:#28A745;
+   border-color: #fff;
 }
 
 .userMenu{
