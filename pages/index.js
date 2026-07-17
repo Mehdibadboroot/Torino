@@ -3,12 +3,14 @@ import MainLayout from "../layouts/MainLayout";
 import Hero from "../components/Hero/Hero";
 import SearchBox from "../components/SearchBox/SearchBox";
 import TourList from "../components/TourList/TourList";
+import Main from "../components/Main/Main";
 
 export default function Home({ tours }) {
   return (
     <MainLayout>
       <Hero />
       <TourList tours={tours} />
+      <Main />
     </MainLayout>
   );
 }

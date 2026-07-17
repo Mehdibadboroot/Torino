@@ -1,0 +1,116 @@
+.container {
+  max-width: 1200px;
+  margin: 80px auto 40px;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 30px;
+  align-items: flex-start;
+}
+/* کارت تور */
+.left {
+  width: 30%;
+}
+
+/* کارت مشخصات */
+.right {
+  width: 70%;
+}
+
+
+.title {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0 0 30px;
+}
+
+/* تصویر تور */
+.image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+/* عنوان تور */
+.left h3 {
+  padding: 20px;
+  margin: 0;
+  font-size: 28px;
+  border-bottom: 1px dashed #ddd;
+}
+
+.left p {
+  padding: 20px;
+  margin: 0;
+  color: #777;
+}
+
+.price {
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price span {
+  color: #555;
+}
+
+.price strong {
+  color: #00a651;
+  font-size: 32px;
+}
+
+.payBtn {
+  width: calc(100% - 40px);
+  margin: 20px;
+  height: 60px;
+  border: none;
+  border-radius: 12px;
+  background: #28ad45;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* اطلاعات کاربر */
+.profileBox {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.profileItem {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  height: 55px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.grid input,
+.grid select {
+  height: 55px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 0 15px;
+}
+
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
+    margin-top: 30px;
+  }
+
+  .left,
+  .right {
+    grid-column: auto;
+  }
+}

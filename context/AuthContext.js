@@ -2,11 +2,14 @@ import { createContext, useContext, useState } from "react";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { getProfile } from "../services/auth";
+import { useRouter } from "next/router";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,6 +38,9 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = (data) => {
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
+
     Cookies.set("accessToken", data.accessToken);
     Cookies.set("refreshToken", data.refreshToken);
 
@@ -46,6 +52,7 @@ export function AuthProvider({ children }) {
     Cookies.remove("refreshToken");
 
     setUser(null);
+      router.push("/");
   };
 
   if (loading) {

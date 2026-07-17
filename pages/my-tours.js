@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import Image from "next/image";
-
 import MainLayout from "../layouts/MainLayout";
 import { getMyTours } from "../services/orders";
+import styles from "../styles/MyTours.module.css";
 
-export default function MyToursPage() {
+export default function MyTours() {
   const [tours, setTours] = useState([]);
 
   useEffect(() => {
@@ -15,49 +14,70 @@ export default function MyToursPage() {
     try {
       const { data } = await getMyTours();
 
-      setTours(Array.isArray(data) ? data : []);
+      setTours(data);
     } catch (err) {
       console.log(err);
+
+      setTours([]);
     }
+  };
+
+  const formatDate = (date) => {
+    if (!date) return "-";
+
+    return new Date(date).toLocaleDateString("fa-IR");
   };
 
   return (
     <MainLayout>
-      <div
-        style={{
-          maxWidth: 1100,
-          margin: "40px auto",
-        }}
-      >
-        <h2>تورهای من</h2>
+      <div className={styles.container}>
+        <h1 className={styles.title}>تور های من</h1>
 
-        {tours.length === 0 && <p>هنوز توری خریداری نکرده‌اید.</p>}
+        {tours.length === 0 ? (
+          <p>توری خریداری نشده است</p>
+        ) : (
+          tours.map((tour) => (
+            <div className={styles.card} key={tour.id}>
+              <div className={styles.header}>
+                <h3>{tour.title || "تور اقلیم کردستان"}</h3>
 
-        {tours.map((tour) => (
-          <div
-            key={tour.id}
-            style={{
-              display: "flex",
-              gap: 20,
-              border: "1px solid #ddd",
-              borderRadius: 12,
-              padding: 20,
-              marginTop: 20,
-            }}
-          >
-            <Image src={tour.image} width={220} height={150} alt={tour.title} />
+                <span className={`${styles.status} ${styles.completed}`}>
+                  به اتمام رسیده
+                </span>
+              </div>
 
-            <div>
-              <h3>{tour.title}</h3>
+              <div className={styles.divider} />
 
-              <p>
-                {tour.origin.name} → {tour.destination.name}
-              </p>
+              <div className={styles.info}>
+                <div className={styles.item}>
+                  <span>شماره تور:</span>
 
-              <p>{tour.price.toLocaleString()} تومان</p>
+                  <strong>{tour.id}</strong>
+                </div>
+
+                <div className={styles.item}>
+                  <span>شروع:</span>
+
+                  <strong>{formatDate(tour.startDate)}</strong>
+                </div>
+
+                <div className={styles.item}>
+                  <span>برگشت:</span>
+
+                  <strong>{formatDate(tour.endDate)}</strong>
+                </div>
+
+                <div className={styles.item}>
+                  <span>مبلغ پرداخت شده:</span>
+
+                  <strong className={styles.green}>
+                    {Number(tour.price).toLocaleString("fa-IR")} تومان
+                  </strong>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </MainLayout>
   );

@@ -1,7 +1,19 @@
 import api from "./api";
 
-export const getBasket = () =>
-  api.get("/basket");
+export const getBasket = async () => {
+  try {
+    const res = await api.get("/basket");
 
-export const addToBasket = (tourId) =>
-  api.put(`/basket/${tourId}`);
+    return res;
+  } catch (err) {
+    if (err.response?.status === 404) {
+      return {
+        data: null,
+      };
+    }
+
+    throw err;
+  }
+};
+
+export const addToBasket = (tourId) => api.put(`/basket/${tourId}`);

@@ -1,9 +1,23 @@
 .footer {
   margin: 25px 0;
   width: auto;
-  height: 452px;
+  height: auto;
 }
 
+.logo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: 240px;
+}
+
+.logo h5{
+margin-top: 15px;
+font-size: 15px;
+font-weight: 400;
+}
 .item {
   display: flex;
   justify-content: space-between;
@@ -32,18 +46,17 @@
 .line {
   width: 1188px;
   height: 0;
- margin: 50px auto;
+  margin: 50px auto;
   border: solid 1px #00000033;
 }
 
 .about {
   display: flex;
-  /* justify-content: space-between; */
   margin: 25px;
 }
 
 .about div {
-  margin: 0 30px ;
+  margin: 0 30px;
 }
 .about h4 {
   font-size: 18px;
@@ -64,4 +77,32 @@
 }
 .support_item {
   display: flex;
+  margin: 60px 15px 15px 100px;
+}
+
+.support_item img {
+  width: 68px;
+  height: 74px;
+  margin: 0 10px 15px 15px;
+}
+
+.line_end{
+  width: 1440px;
+  height: 0;
+  border: 1px solid #00000033;
+}
+
+.torino h3 {
+  font-size: 16px;
+  font-weight: 400;
+  color: #00000080;
+  text-align: center;
+  margin: 10px;
+}
+.torino h4 {
+  font-size: 16px;
+  font-weight: 400;
+  color: #00000099;
+  text-align: center;
+  margin: 10px;
 }

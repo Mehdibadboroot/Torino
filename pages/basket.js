@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 
+import styles from "../styles/Basket.module.css";
 import MainLayout from "../layouts/MainLayout";
+
 import { getBasket } from "../services/basket";
-import { createOrder } from "../services/orders";
 
 export default function BasketPage() {
+  const router = useRouter();
+
   const [tour, setTour] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadBasket();
@@ -14,86 +19,100 @@ export default function BasketPage() {
 
   const loadBasket = async () => {
     try {
-      const { data } = await getBasket();
+      const res = await getBasket();
+
+      console.log("BASKET RESPONSE:", res);
+
+      const data = res?.data;
+
+      if (!data || !data.id) {
+        setTour(null);
+        return;
+      }
+
       setTour(data);
     } catch (err) {
+      console.log("BASKET ERROR:", err);
+
       setTour(null);
+    } finally {
+      setLoading(false);
     }
   };
-
-  const paymentHandler = async () => {
-  try {
-    const orderData = {
-      nationalCode: "3720878654",
-      fullName: "John Doe",
-      gender: "male",
-      birthDate: "2022-10-10",
-    };
-
-    const { data } = await createOrder(orderData);
-
-    alert(data.message);
-
-    await loadBasket();
-  } catch (err) {
-    console.log(err.response?.data);
-    alert(err.response?.data?.message || "پرداخت انجام نشد");
-  }
-};
+  const paymentHandler = () => {
+    router.push("/payment");
+  };
 
   return (
     <MainLayout>
-      <div
-        style={{
-          maxWidth: 1100,
-          margin: "40px auto",
-        }}
-      >
-        <h2>سبد خرید</h2>
+      <div className={styles.container}>
+        <h1 className={styles.title}>سبد خرید</h1>
 
-        {tour && (
-          <button
-            onClick={paymentHandler}
-            style={{
-              margin: "20px 0",
-              padding: "10px 20px",
-            }}
-          >
-            پرداخت
-          </button>
+        {loading && <p>در حال دریافت اطلاعات...</p>}
+
+        {!loading && !tour && (
+          <div className={styles.empty}>
+            <h2>سبد خرید خالی است</h2>
+
+            <p>هنوز توری به سبد خرید اضافه نکرده‌اید.</p>
+          </div>
         )}
 
-        {!tour && <p>سبد خرید خالی است.</p>}
+        {!loading && tour && (
+          <div className={styles.card}>
+            <div className={styles.imageBox}>
+              <Image
+                src={tour.image}
+                width={280}
+                height={190}
+                alt={tour.title}
+                className={styles.image}
+              />
+            </div>
 
-        {tour && (
-          <div
-            style={{
-              display: "flex",
-              gap: 20,
-              border: "1px solid #ddd",
-              borderRadius: 12,
-              padding: 20,
-            }}
-          >
-            <Image src={tour.image} width={250} height={170} alt={tour.title} />
-
-            <div>
+            <div className={styles.info}>
               <h2>{tour.title}</h2>
 
-              <p>
-                {tour.origin.name} → {tour.destination.name}
-              </p>
+              <div className={styles.route}>
+                {tour.origin?.name}
 
-              <p>قیمت: {tour.price.toLocaleString()} تومان</p>
+                <span>→</span>
 
-              <p>
-                ظرفیت: {tour.availableSeats}
-                {" / "}
-                {tour.capacity}
-              </p>
+                {tour.destination?.name}
+              </div>
 
-              <p>وسیله نقلیه: {tour.fleetVehicle}</p>
+              <div className={styles.items}>
+                <div>
+                  <span>قیمت</span>
+
+                  <strong>
+                    {Number(tour.price).toLocaleString("fa-IR")} تومان
+                  </strong>
+                </div>
+
+                <div>
+                  <span>ظرفیت</span>
+
+                  <strong>
+                    {tour.availableSeats}
+
+                    {" / "}
+
+                    {tour.capacity}
+                  </strong>
+                </div>
+
+                <div>
+                  <span>وسیله نقلیه</span>
+
+                  <strong>{tour.fleetVehicle}</strong>
+                </div>
+              </div>
             </div>
+
+            <button className={styles.payment} onClick={paymentHandler}>
+              ادامه و پرداخت
+            </button>
           </div>
         )}
       </div>

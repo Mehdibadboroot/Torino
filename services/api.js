@@ -20,4 +20,24 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response?.status === 500) {
+      window.location.href = "/500";
+    }
+
+    if (!error.response) {
+      window.location.href = "/500";
+    }
+
+    // if (error.response?.status === 404) {
+    //   window.location.href = "/404";
+    // }
+
+    return Promise.reject(error);
+  },
+);
 export default api;

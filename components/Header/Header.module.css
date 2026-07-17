@@ -19,14 +19,14 @@
 .logo {
   display: flex;
   align-items: center;
-   justify-content:center;
+  justify-content: center;
 }
 
-.logo img{
-  display:block;
-  width:146px;
-  height:auto;
-  object-fit:contain;
+.logo img {
+  display: block;
+  width: 146px;
+  height: auto;
+  object-fit: contain;
 }
 
 .nav {
@@ -41,7 +41,7 @@
   color: #282828;
   text-decoration: none;
   font-size: 16px;
-  transition: .2s;
+  transition: 0.2s;
 }
 
 .nav a:hover {
@@ -58,84 +58,88 @@
   width: 150px;
   height: 44px;
   border-radius: 8px;
-  color: #28A745;
+  color: #28a745;
   border: solid 2px;
   background-color: #fff;
-  border-color: #28A745;
+  border-color: #28a745;
   cursor: pointer;
   font-size: 15px;
-  transition: .2s;
+  transition: 0.2s;
 }
 
 .loginBtn:hover {
   color: #fff;
-  background:#28A745;
-   border-color: #fff;
+  background: #28a745;
+  border-color: #fff;
 }
 
-.userMenu{
-    position:relative;
+.userMenu {
+  position: relative;
 }
 
+.userBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 
-.userBtn{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
+  min-width: 140px;
+  padding: 0 18px;
+  height: 44px;
 
-    min-width:140px;
-    padding:0 18px;
-    height:44px;
+  border: none;
+  border-radius: 12px;
 
-    border:none;
-    border-radius:12px;
-
-    background:#28A745;
-    color:#fff;
-    cursor:pointer;
+  background: #28a745;
+  color: #fff;
+  cursor: pointer;
 }
 
-.dropdown{
-    position:absolute;
-    right:0;
-    top:100%;
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
 
-    margin-top:6px;
+  margin-top: 6px;
 
-    width:190px;
+  width: 190px;
 
-    background:#fff;
+  background: #fff;
 
-    border-radius:12px;
+  border-radius: 12px;
 
-    box-shadow:0 12px 30px rgba(0,0,0,.15);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 
-    opacity:0;
-    visibility:hidden;
+  opacity: 0;
+  visibility: hidden;
 
-    transition:.2s;
+  transition: 0.2s;
 }
 
-.userMenu:hover .dropdown{
-    opacity:1;
-    visibility:visible;
+.userMenu:hover .dropdown {
+  opacity: 1;
+  visibility: visible;
 }
 
 .dropdown a,
-.dropdown button{
-    display:block;
-    width:100%;
-    padding:14px 18px;
+.dropdown button {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: right;
 
-    text-align:right;
+  background: none;
+  border: none;
 
-    background:none;
-    border:none;
+  cursor: pointer;
+}
 
-    cursor:pointer;
+.dropdown button {
+  color: #d40000;
 }
 .dropdown a:hover,
-.dropdown button:hover{
-    background:#f4f4f4;
+.dropdown button:hover {
+  background: #f4f4f4;
 }

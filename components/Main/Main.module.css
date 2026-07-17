@@ -1,0 +1,376 @@
+.wrapper {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+  border-radius: 10px;
+  border: 1px solid #00000040;
+}
+
+.callSection {
+  width: 100%;
+  margin: 80px 0;
+}
+.contactCard {
+  width: 280px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.phoneBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.btn {
+  margin-top: 28px;
+  width: 170px;
+  height: 48px;
+  border: none;
+  border-radius: 10px;
+  background: #0f5d31;
+  color: #fff;
+  cursor: pointer;
+}
+
+.banner {
+  flex: 1;
+  position: relative;
+  height: 220px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.background {
+  position: absolute;
+  inset: 0;
+  background: #28a745;
+}
+
+.operator {
+  position: absolute;
+  bottom: 0;
+  left: 60px;
+  z-index: 2;
+}
+
+.content {
+  position: absolute;
+  right: 70px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  color: #fff;
+  text-align: right;
+}
+.content span {
+  color: #10411b;
+}
+
+.content h2 {
+  font-size: 50px;
+  font-weight: 800;
+  margin: 0 0 16px;
+}
+
+.content p {
+  font-size: 32px;
+  margin: 0;
+}
+
+.whyWrapper {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
+}
+
+/* متن */
+
+.whyContent {
+  flex: 1;
+}
+
+.titleBox {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.question {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #1d7a3d;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.titleBox h2 {
+  font-size: 44px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.titleBox span {
+  color: #1d7a3d;
+}
+
+.whyContent h3 {
+  margin-bottom: 24px;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.whyContent p {
+  line-height: 2.6;
+  color: #444;
+  font-size: 22px;
+  text-align: justify;
+}
+
+/* =======================
+      WHY SECTION
+======================= */
+
+.whySection {
+  margin: 120px 0;
+}
+
+.whyWrapper {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
+}
+
+/* متن */
+
+.whyContent {
+  flex: 1;
+}
+
+.titleBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.question {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #28a745;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.titleBox h2 {
+  margin: 0;
+  font-size: 42px;
+  font-weight: 800;
+  color: #222;
+}
+
+.titleBox span {
+  color: #28a745;
+}
+
+.whyContent h3 {
+  margin: 20px 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: #222;
+}
+
+.whyContent p {
+  font-size: 18px;
+  line-height: 2.4;
+  color: #555;
+  text-align: justify;
+}
+
+/* تصاویر */
+
+.gallery {
+  width: 520px;
+  flex-shrink: 0;
+}
+
+.mainImage {
+  position: relative;
+  width: 520px;
+  height: 500px;
+}
+
+/* عکس اصلی */
+
+.img1 {
+  position: absolute;
+  width: 390px;
+  height: 480px;
+  right: 0;
+  top: 0;
+  z-index: 4;
+}
+
+/* عکس دوم */
+
+.img2 {
+  position: absolute;
+  width: 120px;
+  height: 420px;
+  right: 320px;
+  top: 30px;
+  z-index: 3;
+}
+
+/* عکس سوم */
+
+.img3 {
+  position: absolute;
+  width: 90px;
+  height: 340px;
+  right: 400px;
+  top: 70px;
+  z-index: 2;
+}
+
+/* عکس چهارم */
+
+.img4 {
+  position: absolute;
+  width: 70px;
+  height: 280px;
+  right: 460px;
+  top: 100px;
+  z-index: 1;
+}
+
+.img1 img,
+.img2 img,
+.img3 img,
+.img4 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 28px;
+  display: block;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* اسلایدر */
+
+.sliderNav {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+}
+
+.sliderNav button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 28px;
+  color: #666;
+}
+
+.sliderNav span {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.features {
+  margin: 100px 0 60px;
+  border-top: 1px solid #e8e8e8;
+
+  padding: 40px 0;
+}
+
+.featuresWrapper {
+  max-width: 1180px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+
+.feature {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.feature h3 {
+  margin: 0 0 12px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #222;
+}
+
+.feature p {
+  margin: 0;
+  color: #555;
+  line-height: 2;
+  font-size: 17px;
+}
+
+/* Responsive */
+
+@media (max-width: 992px) {
+  .whyWrapper {
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  .whyContent {
+    text-align: center;
+  }
+
+  .titleBox {
+    justify-content: center;
+  }
+
+  .gallery {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .featuresWrapper {
+    flex-direction: column;
+  }
+
+  .feature {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+  }
+}

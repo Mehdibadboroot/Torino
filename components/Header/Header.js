@@ -20,7 +20,7 @@ export default function Header() {
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
 
-  const [timer, setTimer] = useState(90);
+  const [timer, setTimer] = useState(60);
 
   const { user, login, logout } = useAuth();
 
@@ -47,7 +47,7 @@ export default function Header() {
 
       setStep(2);
 
-      setTimer(90);
+      setTimer(60);
 
       setOtp(["", "", "", "", "", ""]);
     } catch (err) {
@@ -117,7 +117,10 @@ export default function Header() {
             {user ? (
               <div className={styles.userMenu}>
                 <button className={styles.userBtn}>
-                  👤 {user.firstName || user.mobile}
+                   👤 
+                  {user
+                    ? `${user.firstName || ""} ${user.lastName || ""}`
+                    : "ورود"}
                 </button>
 
                 <div className={styles.dropdown}>
@@ -126,7 +129,7 @@ export default function Header() {
                   <Link href="/my-tours">تورهای من</Link>
                   <Link href="/basket">سبد خرید</Link>
 
-                  <button onClick={logout}>خروج</button>
+                  <button onClick={logout}>خروج از حساب کاربری</button>
                 </div>
               </div>
             ) : (
