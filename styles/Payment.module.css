@@ -6,16 +6,13 @@
   gap: 30px;
   align-items: flex-start;
 }
-/* کارت تور */
 .left {
   width: 30%;
 }
 
-/* کارت مشخصات */
 .right {
   width: 70%;
 }
-
 
 .title {
   font-size: 30px;
@@ -23,14 +20,12 @@
   margin: 0 0 30px;
 }
 
-/* تصویر تور */
 .image {
   width: 100%;
   height: 220px;
   object-fit: cover;
 }
 
-/* عنوان تور */
 .left h3 {
   padding: 20px;
   margin: 0;
@@ -72,7 +67,6 @@
   font-weight: bold;
 }
 
-/* اطلاعات کاربر */
 .profileBox {
   display: grid;
   grid-template-columns: 1fr 1fr;

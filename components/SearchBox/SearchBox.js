@@ -23,17 +23,22 @@ export default function SearchBox() {
   const searchHandler = () => {
     const query = {};
 
+    const toEnglishNumber = (str) => {
+      return str.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+    };
+
     if (originId) query.originId = originId;
     if (destinationId) query.destinationId = destinationId;
 
     if (dateRange.length === 2) {
-      query.startDate = dateRange[0].convert(gregorian).toDate().toISOString();
+      query.startDate = toEnglishNumber(
+        dateRange[0].convert(gregorian).format("YYYY-MM-DD"),
+      );
 
-      query.endDate = dateRange[1].convert(gregorian).toDate().toISOString();
+      query.endDate = toEnglishNumber(
+        dateRange[1].convert(gregorian).format("YYYY-MM-DD"),
+      );
     }
-
-    
-
     router.push({
       pathname: "/",
       query,
@@ -59,7 +64,6 @@ export default function SearchBox() {
           calendarPosition="bottom"
           inputClass={styles.dateInput}
           className="custom-calendar"
-         
         />
       </div>
       <div className={styles.item}>

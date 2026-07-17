@@ -22,6 +22,8 @@ export default function Header() {
 
   const [timer, setTimer] = useState(60);
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const { user, login, logout } = useAuth();
 
   useEffect(() => {
@@ -92,6 +94,12 @@ export default function Header() {
       <header className={styles.header}>
         <Container>
           <div className={styles.wrapper}>
+             <button
+                className={styles.menuBtn}
+                onClick={() => setMenuOpen(!menuOpen)}
+              >
+                ☰
+              </button>
             <Link href="/" className={styles.logo}>
               <Image
                 src="/images/logo.svg"
@@ -114,35 +122,46 @@ export default function Header() {
               <Link href="/">تماس با ما</Link>
             </nav>
 
-            {user ? (
-              <div className={styles.userMenu}>
-                <button className={styles.userBtn}>
-                   👤 
-                  {user
-                    ? `${user.firstName || ""} ${user.lastName || ""}`
-                    : "ورود"}
-                </button>
+            <div className={styles.mobileActions}>
+              {user ? (
+                <div className={styles.userMenu}>
+                  <button className={styles.userBtn}>
+                    👤 {user.firstName} {user.lastName}
+                  </button>
 
-                <div className={styles.dropdown}>
-                  <Link href="/profile">پروفایل</Link>
-
-                  <Link href="/my-tours">تورهای من</Link>
-                  <Link href="/basket">سبد خرید</Link>
-
-                  <button onClick={logout}>خروج از حساب کاربری</button>
+                  <div className={styles.dropdown}>
+                    <Link href="/profile">پروفایل</Link>
+                    <Link href="/my-tours">تورهای من</Link>
+                    <Link href="/basket">سبد خرید</Link>
+                    <button onClick={logout}>خروج از حساب کاربری</button>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <button
-                className={styles.loginBtn}
-                onClick={() => setShowModal(true)}
-              >
-                ورود | ثبت نام
-              </button>
-            )}
+              ) : (
+                <button
+                  className={styles.loginBtn}
+                  onClick={() => setShowModal(true)}
+                >
+                  ورود
+                </button>
+              )}
+
+             
+            </div>
           </div>
         </Container>
       </header>
+
+      {menuOpen && (
+        <div className={styles.mobileMenu}>
+          <Link href="/">صفحه اصلی</Link>
+
+          <Link href="/">خدمات گردشگری</Link>
+
+          <Link href="/">درباره ما</Link>
+
+          <Link href="/">تماس با ما</Link>
+        </div>
+      )}
 
       {showModal && (
         <LoginModal

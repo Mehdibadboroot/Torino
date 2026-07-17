@@ -1,202 +1,117 @@
-.container{
+.container {
+  max-width: 1050px;
 
-max-width:1050px;
+  margin: 90px auto 40px;
 
-margin:90px auto 40px;
-
-direction:rtl;
-
+  direction: rtl;
 }
 
+.title {
+  font-size: 28px;
 
-
-.title{
-
-font-size:28px;
-
-margin-bottom:35px;
-
+  margin-bottom: 35px;
 }
 
+.card {
+  background: white;
 
+  border: 1px solid #ddd;
 
+  border-radius: 14px;
 
-.card{
+  margin-bottom: 25px;
 
-background:white;
-
-border:1px solid #ddd;
-
-border-radius:14px;
-
-margin-bottom:25px;
-
-overflow:hidden;
-
+  overflow: hidden;
 }
 
+.header {
+  height: 70px;
 
+  display: flex;
 
+  align-items: center;
 
-.header{
+  justify-content: space-between;
 
-height:70px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:space-between;
-
-padding:0 30px;
-
+  padding: 0 30px;
 }
 
+.header h3 {
+  font-size: 18px;
 
-
-
-.header h3{
-
-font-size:18px;
-
-font-weight:700;
-
+  font-weight: 700;
 }
 
+.status {
+  padding: 6px 18px;
 
+  border-radius: 20px;
 
-
-
-.status{
-
-padding:6px 18px;
-
-border-radius:20px;
-
-font-size:13px;
-
+  font-size: 13px;
 }
 
+.completed {
+  background: #d7f7dd;
 
-
-
-.completed{
-
-background:#d7f7dd;
-
-color:#18a844;
-
+  color: #18a844;
 }
 
+.divider {
+  height: 1px;
 
-
-
-.divider{
-
-height:1px;
-
-background:#eee;
-
+  background: #eee;
 }
 
+.info {
+  display: grid;
 
+  grid-template-columns: repeat(2, 1fr);
 
+  gap: 30px;
 
-
-.info{
-
-display:grid;
-
-grid-template-columns:repeat(2,1fr);
-
-gap:30px;
-
-padding:28px 35px;
-
+  padding: 28px 35px;
 }
 
+.item {
+  display: flex;
 
+  gap: 10px;
 
+  align-items: center;
 
-
-.item{
-
-display:flex;
-
-gap:10px;
-
-align-items:center;
-
-font-size:15px;
-
+  font-size: 15px;
 }
 
-
-
-
-.item span{
-
-color:#777;
-
+.item span {
+  color: #777;
 }
 
+.item strong {
+  color: #222;
 
-
-.item strong{
-
-color:#222;
-
-font-weight:500;
-
+  font-weight: 500;
 }
 
-
-
-
-.green{
-
-color:#00a651!important;
-
+.green {
+  color: #00a651 !important;
 }
 
+@media (max-width: 768px) {
+  .container {
+    margin: 40px 15px;
+  }
 
+  .header {
+    padding: 0 15px;
+  }
 
+  .info {
+    grid-template-columns: 1fr;
 
+    padding: 20px;
+  }
 
-@media(max-width:768px){
-
-
-.container{
-
-margin:40px 15px;
-
-}
-
-
-
-.header{
-
-padding:0 15px;
-
-}
-
-
-
-.info{
-
-grid-template-columns:1fr;
-
-padding:20px;
-
-}
-
-
-
-.item{
-
-justify-content:space-between;
-
-}
-
-
+  .item {
+    justify-content: space-between;
+  }
 }

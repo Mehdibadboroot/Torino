@@ -34,6 +34,17 @@ export default function ProfilePage() {
     accountIdentifier: "",
   });
 
+  const convertToPersian = (date) => {
+    if (!date) return "";
+
+    return new DateObject({
+      date,
+      calendar: gregorian,
+    })
+      .convert(persian)
+      .format("YYYY/MM/DD");
+  };
+
   useEffect(() => {
     if (!user) return;
 
@@ -44,13 +55,12 @@ export default function ProfilePage() {
       lastName: user.lastName || "",
       nationalCode: user.nationalCode || "",
       gender: user.gender || "",
-      birthDate: user.birthDate || "",
+
+      birthDate: convertToPersian(user.birthDate),
+
       shaba_code: user.payment?.shaba_code || "",
-
-      debitCard_code: user.payment?.debitCard_code || "",
-
-      accountIdentifier: user.payment?.accountIdentifier || "",
     });
+
     if (user.birthDate) {
       setBirthDatePicker(
         new DateObject({
@@ -92,7 +102,12 @@ export default function ProfilePage() {
 
         gender: form.gender,
 
-        birthDate: form.birthDate,
+        birthDate: new DateObject({
+          date: form.birthDate,
+          calendar: persian,
+        })
+          .convert(gregorian)
+          .format("YYYY-MM-DD"),
 
         nationalCode: Number(form.nationalCode),
 
@@ -109,7 +124,6 @@ export default function ProfilePage() {
 
       await updateProfile(payload);
 
-      // گرفتن اطلاعات جدید بدون رفرش
       try {
         const { data } = await getProfile();
 
@@ -136,8 +150,6 @@ export default function ProfilePage() {
     <MainLayout>
       <div className={styles.container}>
         <div className={styles.content}>
-          {/* حساب کاربری */}
-
           <div className={styles.card}>
             <div className={styles.cardHeader}>
               <h3>اطلاعات حساب کاربری</h3>
@@ -190,7 +202,6 @@ export default function ProfilePage() {
               </div>
             )}
           </div>
-          {/* اطلاعات شخصی */}
 
           <div className={styles.card}>
             <div className={styles.cardHeader}>
@@ -340,7 +351,6 @@ export default function ProfilePage() {
               </div>
             )}
           </div>
-          {/* اطلاعات حساب بانکی */}
 
           <div className={styles.card}>
             <div className={styles.cardHeader}>

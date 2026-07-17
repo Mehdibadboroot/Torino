@@ -1,4 +1,3 @@
-
 import MainLayout from "../layouts/MainLayout";
 import Hero from "../components/Hero/Hero";
 import SearchBox from "../components/SearchBox/SearchBox";
@@ -28,8 +27,10 @@ export async function getServerSideProps({ query }) {
 
   const res = await fetch(`http://localhost:6500/tour?${params.toString()}`);
 
-  const tours = await res.json();
+  const data = await res.json();
 
+  const tours = Array.isArray(data) ? data : data.tours || [];
+  console.log("TOURS FROM API:", tours);
   return {
     props: {
       tours,

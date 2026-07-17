@@ -10,10 +10,10 @@
 }
 
 .wrapper {
-  height: 74px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  padding: 15px;
 }
 
 .logo {
@@ -142,4 +142,116 @@
 .dropdown a:hover,
 .dropdown button:hover {
   background: #f4f4f4;
+}
+
+.menuBtn {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  cursor: pointer;
+}
+.mobileMenu {
+  display: none;
+}
+
+.mobileActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    direction: rtl;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .menuBtn {
+    display: block;
+  }
+
+  .header {
+    padding: 12px 0;
+  }
+
+  .logo img {
+    display: none;
+  }
+
+  .loginBtn {
+    display: block;
+    border: none;
+    color: #fff;
+    font-size: 10px;
+
+    background-image: url("/images/login-mobile.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  .userBtn {
+    padding: 8px 12px;
+    font-size: 13px;
+    background: #28a745;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .logo {
+    order: 2;
+  }
+
+  .userMenu,
+  .loginBtn {
+    order: 1;
+  }
+
+  .logo img {
+    width: 105px;
+    height: auto;
+  }
+
+  .mobileMenu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 72px;
+    right: 15px;
+    width: 210px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    padding: 12px;
+    z-index: 999;
+  }
+
+  .mobileMenu a {
+    padding: 12px 8px;
+    color: #222;
+    border-bottom: 1px solid #eee;
+    text-decoration: none;
+    font-size: 15px;
+  }
+
+  .mobileMenu a:last-child {
+    border: none;
+  }
+
+  .dropdown {
+    right: 0;
+    left: auto;
+  }
+  .mobileActions {
+    margin-right: auto;
+  }
 }

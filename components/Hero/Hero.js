@@ -7,7 +7,7 @@ export default function Hero() {
   return (
     <section className={styles.hero}>
       <div className={styles.banner}>
-        <Image src="/images/baner.svg" alt="Hero" fill priority />
+        <Image src="/images/baner.svg" alt="Hero" fill />
       </div>
       <Container>
         <div className={styles.text}>

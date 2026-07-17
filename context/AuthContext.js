@@ -37,22 +37,27 @@ export function AuthProvider({ children }) {
     loadUser();
   }, []);
 
-  const login = (data) => {
+  const login = async (data) => {
     Cookies.remove("accessToken");
     Cookies.remove("refreshToken");
 
     Cookies.set("accessToken", data.accessToken);
     Cookies.set("refreshToken", data.refreshToken);
 
-    setUser(data.user);
-  };
+    try {
+      const { data: profile } = await getProfile();
 
+      setUser(profile);
+    } catch (error) {
+      setUser(data.user);
+    }
+  };
   const logout = () => {
     Cookies.remove("accessToken");
     Cookies.remove("refreshToken");
 
     setUser(null);
-      router.push("/");
+    router.push("/");
   };
 
   if (loading) {
