@@ -7,6 +7,8 @@ import { FiCalendar, FiShield } from "react-icons/fi";
 
 import { FaBus, FaCheckCircle } from "react-icons/fa";
 
+import { toast } from "react-toastify";
+
 import { addToBasket } from "../../services/basket";
 
 export default function TourDetails({ tour }) {
@@ -22,9 +24,9 @@ export default function TourDetails({ tour }) {
     try {
       const { data } = await addToBasket(tour.id);
 
-      alert(data.message);
+      toast.success(data.message);
     } catch (err) {
-      alert(err.response?.data?.message || "خطا در افزودن به سبد خرید");
+      toast.error(err.response?.data?.message || "خطا در افزودن به سبد خرید");
     }
   };
 

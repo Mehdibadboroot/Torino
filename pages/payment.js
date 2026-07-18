@@ -9,12 +9,15 @@ import { createOrder } from "../services/orders";
 import { updateProfile, getProfile } from "../services/auth";
 
 import DatePicker from "react-multi-date-picker";
+import DateObject from "react-date-object";
 
 import { useRouter } from "next/router";
 
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import gregorian from "react-date-object/calendars/gregorian";
+
+import { toast } from "react-toastify";
 
 import Image from "next/image";
 import styles from "../styles/Payment.module.css";
@@ -41,6 +44,20 @@ export default function Payment() {
     loadProfile();
     loadBasket();
   }, []);
+
+  const toEnglishDigits = (str = "") =>
+    str.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+
+  const convertToPersian = (date) => {
+  if (!date) return "";
+
+  return new DateObject({
+    date: toEnglishDigits(date),
+    calendar: gregorian,
+  })
+    .convert(persian)
+    .format("YYYY/MM/DD");
+};
 
   const loadProfile = async () => {
     try {
@@ -72,7 +89,6 @@ export default function Payment() {
   const loadBasket = async () => {
     try {
       const { data } = await getBasket();
-
 
       setBasket(data);
     } catch (err) {
@@ -114,7 +130,7 @@ export default function Payment() {
 
       const { data } = await createOrder(payload);
 
-      alert(data.message);
+      toast.success(data.message);
 
       router.push("/my-tours");
     } catch (err) {
@@ -218,7 +234,9 @@ export default function Payment() {
 
               <div className={styles.profileItem}>
                 <span>تاریخ تولد</span>
-                <strong>{user?.birthDate}</strong>
+                <strong>
+                  {user?.birthDate ? convertToPersian(user.birthDate) : "-"}
+                </strong>
               </div>
             </div>
           )}

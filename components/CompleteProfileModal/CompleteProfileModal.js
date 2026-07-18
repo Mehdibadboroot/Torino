@@ -8,6 +8,8 @@ import gregorian from "react-date-object/calendars/gregorian";
 import { updateProfile, getProfile } from "../../services/auth";
 import { useAuth } from "../../context/AuthContext";
 
+import { toast } from "react-toastify";
+
 import styles from "./CompleteProfileModal.module.css";
 
 export default function CompleteProfileModal({ onClose, onSuccess }) {
@@ -32,23 +34,23 @@ export default function CompleteProfileModal({ onClose, onSuccess }) {
 
   const submitHandler = async () => {
     if (!form.firstName.trim()) {
-      return alert("نام را وارد کنید");
+      return toast.warning("نام را وارد کنید");
     }
 
     if (!form.lastName.trim()) {
-      return alert("نام خانوادگی را وارد کنید");
+      return toast.warning("نام خانوادگی را وارد کنید");
     }
 
     if (!/^\d{10}$/.test(form.nationalCode)) {
-      return alert("کد ملی معتبر نیست");
+      return toast.warning("کد ملی معتبر نیست");
     }
 
     if (!form.gender) {
-      return alert("جنسیت را انتخاب کنید");
+      return toast.warning("جنسیت را انتخاب کنید");
     }
 
     if (!form.birthDate) {
-      return alert("تاریخ تولد را انتخاب کنید");
+      return toast.warning("تاریخ تولد را انتخاب کنید");
     }
 
     try {
@@ -75,7 +77,7 @@ export default function CompleteProfileModal({ onClose, onSuccess }) {
       }
     } catch (err) {
       console.log(err);
-      alert("ثبت اطلاعات با خطا مواجه شد");
+      toast.error("ثبت اطلاعات با خطا مواجه شد");
     } finally {
       setLoading(false);
     }

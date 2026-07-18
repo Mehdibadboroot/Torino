@@ -10,6 +10,8 @@ import gregorian from "react-date-object/calendars/gregorian";
 import DateObject from "react-date-object";
 import { updateProfile, getProfile } from "../services/auth";
 
+import { toast } from "react-toastify";
+
 import styles from "../styles/Profile.module.css";
 
 export default function ProfilePage() {
@@ -34,11 +36,14 @@ export default function ProfilePage() {
     accountIdentifier: "",
   });
 
+  const toEnglishDigits = (str = "") =>
+    str.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+
   const convertToPersian = (date) => {
     if (!date) return "";
 
     return new DateObject({
-      date,
+      date: toEnglishDigits(date),
       calendar: gregorian,
     })
       .convert(persian)
@@ -50,14 +55,11 @@ export default function ProfilePage() {
 
     setForm({
       email: user.email || "",
-
       firstName: user.firstName || "",
       lastName: user.lastName || "",
       nationalCode: user.nationalCode || "",
       gender: user.gender || "",
-
-      birthDate: convertToPersian(user.birthDate),
-
+      birthDate: user.birthDate || "",
       shaba_code: user.payment?.shaba_code || "",
     });
 
@@ -80,8 +82,28 @@ export default function ProfilePage() {
   };
 
   const saveHandler = async () => {
+    if (!form.firstName.trim()) {
+      toast.warning("نام را وارد کنید");
+      return;
+    }
+
+    if (!form.lastName.trim()) {
+      toast.warning("نام خانوادگی را وارد کنید");
+      return;
+    }
+
+    if (!form.gender) {
+      toast.warning("لطفاً جنسیت را انتخاب کنید");
+      return;
+    }
+
+    if (!form.birthDate) {
+      toast.warning("لطفاً تاریخ تولد را انتخاب کنید");
+      return;
+    }
+
     if (editingPersonal && form.nationalCode.length !== 10) {
-      alert("کد ملی باید ۱۰ رقم باشد");
+      toast.warning("کد ملی باید ۱۰ رقم باشد");
       return;
     }
 
@@ -90,7 +112,7 @@ export default function ProfilePage() {
       form.debitCard_code &&
       form.debitCard_code.length !== 16
     ) {
-      alert("شماره کارت باید ۱۶ رقم باشد");
+      toast.warning("شماره کارت باید ۱۶ رقم باشد");
       return;
     }
 
@@ -102,13 +124,7 @@ export default function ProfilePage() {
 
         gender: form.gender,
 
-        birthDate: new DateObject({
-          date: form.birthDate,
-          calendar: persian,
-        })
-          .convert(gregorian)
-          .format("YYYY-MM-DD"),
-
+        birthDate: form.birthDate,
         nationalCode: Number(form.nationalCode),
 
         email: form.email,
@@ -126,7 +142,7 @@ export default function ProfilePage() {
 
       try {
         const { data } = await getProfile();
-
+        console.log("PROFILE AFTER SAVE:", data);
         setUser(data);
       } catch (err) {
         console.log("refresh profile error", err);
@@ -138,11 +154,11 @@ export default function ProfilePage() {
 
       setEditingBank(false);
 
-      alert("اطلاعات با موفقیت ذخیره شد");
+      toast.success("اطلاعات با موفقیت ذخیره شد");
     } catch (err) {
       console.log(err.response?.data || err);
 
-      alert("خطا در ذخیره اطلاعات");
+      toast.error("خطا در ذخیره اطلاعات");
     }
   };
   return (
@@ -257,7 +273,9 @@ export default function ProfilePage() {
                 <div>
                   <span>تاریخ تولد</span>
 
-                  <strong>{user?.birthDate || "-"}</strong>
+                  <strong>
+                    {user?.birthDate ? convertToPersian(user.birthDate) : "-"}
+                  </strong>
                 </div>
               </div>
             ) : (
@@ -324,24 +342,25 @@ export default function ProfilePage() {
                     locale={persian_fa}
                     format="YYYY/MM/DD"
                     placeholder="تاریخ تولد"
-                    value={birthDatePicker}
+                    value={
+                      form.birthDate
+                        ? new DateObject({
+                            date: toEnglishDigits(form.birthDate),
+                            calendar: gregorian,
+                          }).convert(persian)
+                        : null
+                    }
                     onChange={(date) => {
                       if (!date) {
-                        setBirthDatePicker(null);
-
                         setForm({
                           ...form,
                           birthDate: "",
                         });
-
                         return;
                       }
 
-                      setBirthDatePicker(date);
-
                       setForm({
                         ...form,
-
                         birthDate: date.convert(gregorian).format("YYYY-MM-DD"),
                       });
                     }}

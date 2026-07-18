@@ -10,6 +10,8 @@ import { sendOtp, checkOtp } from "../../services/auth";
 
 import { useAuth } from "../../context/AuthContext";
 
+import { toast } from "react-toastify";
+
 import styles from "./Header.module.css";
 
 export default function Header() {
@@ -40,7 +42,7 @@ export default function Header() {
 
   const sendOtpHandler = async () => {
     if (mobile.length !== 11) {
-      alert("شماره موبایل معتبر نیست");
+      toast.warning("شماره موبایل معتبر نیست");
       return;
     }
 
@@ -53,7 +55,7 @@ export default function Header() {
 
       setOtp(["", "", "", "", "", ""]);
     } catch (err) {
-      alert(err.response?.data?.message || "خطا");
+      toast.error(err.response?.data?.message || "خطا");
     }
   };
 
@@ -73,7 +75,7 @@ export default function Header() {
 
       setOtp(["", "", "", "", "", ""]);
     } catch (err) {
-      alert(err.response?.data?.message || "کد اشتباه است");
+      toast.error(err.response?.data?.message || "کد اشتباه است");
     }
   };
 
