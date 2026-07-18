@@ -24,7 +24,6 @@ export default function useTours() {
         if (startDate) params.startDate = startDate;
         if (endDate) params.endDate = endDate;
 
-        console.log(params);
         const { data } = await getTours(params);
 
         setTours(data);

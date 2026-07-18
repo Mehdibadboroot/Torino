@@ -145,7 +145,6 @@ export default function ProfilePage() {
       alert("خطا در ذخیره اطلاعات");
     }
   };
-  console.log("BIRTH:", form.birthDate);
   return (
     <MainLayout>
       <div className={styles.container}>

@@ -21,7 +21,6 @@ export default function BasketPage() {
     try {
       const res = await getBasket();
 
-      console.log("BASKET RESPONSE:", res);
 
       const data = res?.data;
 
@@ -32,7 +31,6 @@ export default function BasketPage() {
 
       setTour(data);
     } catch (err) {
-      console.log("BASKET ERROR:", err);
 
       setTour(null);
     } finally {

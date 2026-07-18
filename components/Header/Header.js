@@ -94,12 +94,12 @@ export default function Header() {
       <header className={styles.header}>
         <Container>
           <div className={styles.wrapper}>
-             <button
-                className={styles.menuBtn}
-                onClick={() => setMenuOpen(!menuOpen)}
-              >
-                ☰
-              </button>
+            <button
+              className={styles.menuBtn}
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              ☰
+            </button>
             <Link href="/" className={styles.logo}>
               <Image
                 src="/images/logo.svg"
@@ -131,8 +131,13 @@ export default function Header() {
 
                   <div className={styles.dropdown}>
                     <Link href="/profile">پروفایل</Link>
+
                     <Link href="/my-tours">تورهای من</Link>
+
+                    <Link href="/transactions">تراکنش‌ها</Link>
+
                     <Link href="/basket">سبد خرید</Link>
+
                     <button onClick={logout}>خروج از حساب کاربری</button>
                   </div>
                 </div>
@@ -144,8 +149,6 @@ export default function Header() {
                   ورود
                 </button>
               )}
-
-             
             </div>
           </div>
         </Container>

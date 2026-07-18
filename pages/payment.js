@@ -73,7 +73,6 @@ export default function Payment() {
     try {
       const { data } = await getBasket();
 
-      console.log(data);
 
       setBasket(data);
     } catch (err) {
